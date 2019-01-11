@@ -96,8 +96,11 @@ class GraphAdjacencyMatrix(GraphBase):
         if tail < 0 or tail >= len(self.adj) or head < 0 or head >= len(self.adj):
             return
 
-        # insert the weight into the adjacency matrix
-        self.adj[tail][head] = weight
+        # insert the weight, if present, into the adjacency matrix, else insert 1
+        if weight:
+            self.adj[tail][head] = weight
+        else:
+            self.adj[tail][head] = 1
 
     def deleteEdge(self, tail, head):
         """
