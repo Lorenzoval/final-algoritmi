@@ -23,7 +23,7 @@ def hasCycleDFSRecursive(G, v, visited, fatherId):
         if not visited[adjNode]:
             if hasCycleDFSRecursive(G, adjNode, visited, v):  # se la chiamata ricorsiva individua un ciclo
                 return True  # ritorna True
-        elif visited[adjNode] and adjNode != fatherId:
+        elif adjNode != fatherId:
             return True
 
     return False
