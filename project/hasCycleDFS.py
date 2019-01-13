@@ -1,17 +1,18 @@
 import project.GraphGenerator as GraphGenerator
 import graph.Graph_AdjacencyList
-import random
+# import random
 
 
 def hasCycleDFS(G):
     """
-    Esegue una visita DFS nel grafo G a partire da un nodo random. Mantiene bool di marcatura per ogni nodo
+    Esegue una visita DFS nel grafo G a partire dal primo nodo. Mantiene bool di marcatura per ogni nodo
     tramite indicizzazione diretta su una lista, verifica se ci sono archi all'indietro, ovvero da un nodo
     ad uno già visitato che non ne sia il padre. Se non ci sono archi all'indietro il grafo è aciclico.
     :param G: Graph.
     :return: bool.
     """
-    rootId = random.choice(list(G.nodes.keys()))  # inizia la visita da un nodo random
+    # rootId = random.choice(list(G.nodes.keys()))  # inizia la visita da un nodo random
+    rootId = list(G.nodes.keys())[0]
     visited = [False for _ in G.nodes]  # inizializza la lista di marcatura
     return hasCycleDFSRecursive(G, rootId, visited, rootId)  # inizia la visita vera e propria
 
@@ -50,3 +51,8 @@ if __name__ == "__main__":
     rand = graph.Graph_AdjacencyList.GraphAdjacencyList()
     print("Number of edges:", GraphGenerator.generateRandGraph(rand, 10))
     printResults(rand)
+
+    print("Complete:")
+    comp = graph.Graph_AdjacencyList.GraphAdjacencyList()
+    GraphGenerator.generateCompleteGraph(comp, 10)
+    printResults(comp)
