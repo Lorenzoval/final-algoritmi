@@ -9,11 +9,13 @@ def generateAcyclicGraph(G, n, weighted=False):
     """
     generateAcyclicGraph, dato in input un grafo vuoto (non dipendendo quindi dall'implementazione dello stesso)
     lo modifica in loco rendendolo un grafo con n vertici non orienetato, connesso ed aciclico.
-    Il parametro weighted indica se il grafo va generato pesato o non pesato.
+    Il parametro weighted indica se il grafo va generato pesato o non pesato. Ritorna il numero di archi.
     :param G: empty Graph.
     :param n: int.
     :param weighted: bool.
+    :return: int.
     """
+    edges = 0
     # check if the graph is weighted
     if not weighted:
         weight = None
@@ -30,19 +32,23 @@ def generateAcyclicGraph(G, n, weighted=False):
             weight = j.id + dst.id
         G.insertEdge(j.id, dst.id, weight)
         G.insertEdge(dst.id, j.id, weight)
+        edges += 1
         linkedNodes.append(j)
+
+    return edges
 
 
 def generateCyclicGraphNaive(G, n, weighted=False):
     """
     generateCyclicGraphNaive, dato in input un grafo vuoto (non dipendendo quindi dall'implementazione dello stesso)
     lo modifica in loco rendendolo un grafo con n vertici non orienetato, connesso e con un ciclo.
-    Il parametro weighted indica se il grafo va generato pesato o non pesato.
+    Il parametro weighted indica se il grafo va generato pesato o non pesato. Ritorna il numero di archi.
     :param G: empty Graph.
     :param n: int.
     :param weighted: bool.
-    :return:
+    :return: int.
     """
+    edges = 0
     # check if the graph is weighted
     if not weighted:
         weight = None
@@ -57,14 +63,17 @@ def generateCyclicGraphNaive(G, n, weighted=False):
         weight = linkedNodes[0].id + linkedNodes[1].id
     G.insertEdge(linkedNodes[0].id, linkedNodes[1].id, weight)
     G.insertEdge(linkedNodes[1].id, linkedNodes[0].id, weight)
+    edges += 1
     if weighted:
         weight = linkedNodes[1].id + linkedNodes[2].id
     G.insertEdge(linkedNodes[1].id, linkedNodes[2].id, weight)
     G.insertEdge(linkedNodes[2].id, linkedNodes[1].id, weight)
+    edges += 1
     if weighted:
         weight = linkedNodes[0].id + linkedNodes[2].id
     G.insertEdge(linkedNodes[0].id, linkedNodes[2].id, weight)
     G.insertEdge(linkedNodes[2].id, linkedNodes[0].id, weight)
+    edges += 1
     # add edges to G
     for j in nodes[3:]:
         dst = random.choice(linkedNodes)
@@ -72,7 +81,10 @@ def generateCyclicGraphNaive(G, n, weighted=False):
             weight = j.id + dst.id
         G.insertEdge(j.id, dst.id, weight)
         G.insertEdge(dst.id, j.id, weight)
+        edges += 1
         linkedNodes.append(j)
+
+    return edges
         
         
 def generateRandGraph(G, n, weighted=False):
@@ -127,11 +139,13 @@ def generateCompleteGraph(G, n, weighted=False):
     """
     Dato in input un grafo G vuoto (non dipendendo quindi dall'implementazione dello stesso), lo modifica in loco
     generando un grafo con n vertici, non orientato, in cui ogni nodo è connesso con ogni altro nodo del grafo.
-    Il parametro weighted indica se il grafo va generato pesato o non pesato.
+    Il parametro weighted indica se il grafo va generato pesato o non pesato. Ritorna il numero di archi.
     :param G: empty Graph.
     :param n: int.
     :param weighted: bool.
+    :return: int.
     """
+    edges = 0
     # check if the graph is weighted
     if not weighted:
         weight = None
@@ -152,13 +166,16 @@ def generateCompleteGraph(G, n, weighted=False):
                 weight = j.id + linkedNodes[n].id
             G.insertEdge(j.id, linkedNodes[n].id, weight)
             G.insertEdge(linkedNodes[n].id, j.id, weight)
+            edges += 1
         linkedNodes.append(j)
+
+    return edges
 
 
 if __name__ == "__main__":
     print("Acyclic:")
     aGraphAL = graph.Graph_AdjacencyList.GraphAdjacencyList()
-    generateAcyclicGraph(aGraphAL, 10)
+    print("Number of edges:", generateAcyclicGraph(aGraphAL, 10))
     aGraphAL.print()
     aGraphIL = graph.Graph_IncidenceList.GraphIncidenceList()
     generateAcyclicGraph(aGraphIL, 10, True)
@@ -169,7 +186,7 @@ if __name__ == "__main__":
 
     print("Cyclic:")
     cGraphAL = graph.Graph_AdjacencyList.GraphAdjacencyList()
-    generateCyclicGraphNaive(cGraphAL, 10)
+    print("Number of edges:", generateCyclicGraphNaive(cGraphAL, 10))
     cGraphAL.print()
     # cGraphIL = graph.Graph_IncidenceList.GraphIncidenceList()
     # generateCyclicGraphNaive(cGraphIL, 10, True)
@@ -185,5 +202,5 @@ if __name__ == "__main__":
 
     print("Complete:")
     compGraphAL = graph.Graph_AdjacencyList.GraphAdjacencyList()
-    generateCompleteGraph(compGraphAL, 10)
+    print("Number of edges:", generateCompleteGraph(compGraphAL, 10))
     compGraphAL.print()
