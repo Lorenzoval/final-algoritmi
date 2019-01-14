@@ -2,6 +2,7 @@ import unionfind.quickUnion
 import unionfind.quickFind
 import project.GraphGenerator as GraphGenerator
 import graph.Graph_AdjacencyList
+from functools import wraps
 from time import time
 
 
@@ -22,6 +23,7 @@ class EdgesIterator:
 
 
 def writeResults(func):
+    @wraps(func)
     def wrapping_function(*args, **kwargs):
         start = time()
         value = func(*args, **kwargs)  # chiamata alla funzione da decorare
